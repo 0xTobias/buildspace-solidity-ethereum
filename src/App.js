@@ -76,7 +76,7 @@ const App = () => {
         /*
          * Store our data in React State
          */
-        setAllInsults(insultsCleaned);
+        setAllInsults(insultsCleaned.reverse());
       } else {
         console.log("Ethereum object doesn't exist!")
       }
@@ -91,14 +91,14 @@ const App = () => {
     const onNewInsult = (from, to,timestamp, insultType, message) => {
       console.log("NewInsult", from, to, timestamp, insultType, message);
       setAllInsults((prevState) => [
-        ...prevState,
         {
           address: from,
           insultType: insultType,
           timestamp: new Date(timestamp * 1000),
           message: message,
           insultee: to,
-        }
+        },
+        ...prevState,
       ]);
     };
 
