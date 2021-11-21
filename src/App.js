@@ -193,18 +193,15 @@ const App = () => {
       <div className="dataContainer">
         <div className="bio">WHAT TF DID YOU SAY ABOUT MA MOMMA???!!?!</div>
 
-        
-
         {/*
          * If there is no currentAccount render this button
          */}
-        {!currentAccount ? 
+        {!currentAccount ? (
           <button className="connectButton" onClick={connectWallet}>
             Connect Wallet
           </button>
-         :
-        (recentlyInsulted ? (
-            <img className="gif" src="https://i.imgur.com/rhCcmUv.gif" />
+        ) : recentlyInsulted ? (
+          <img className="gif" src="https://i.imgur.com/rhCcmUv.gif" />
         ) : (
           <form
             className="form"
@@ -230,7 +227,7 @@ const App = () => {
 
             <input
               type="text"
-              placeholder="Enter your insult!"
+              placeholder="Enter your punchline! (ex: she brought a spoon to the Super Bowl)"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               required
@@ -240,8 +237,7 @@ const App = () => {
               Yo' momma {insultee === defaultInsultee ? "Me" : insultee}
             </button>
           </form>
-        ))
-        }
+        )}
 
         {console.log(allInsults)}
         {allInsults.map((insult, index) => {
