@@ -354,7 +354,9 @@ node_modules
 coverage
 coverage.json
 typechain
+/solidity/.env
+solidity/hardhat.config.js
 
 #Hardhat files
 cache
-artifacts
+artifacts=
