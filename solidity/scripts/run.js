@@ -1,24 +1,56 @@
+/* eslint-disable no-undef */
 const main = async () => {
-  const [owner, randomPerson] = await hre.ethers.getSigners();
-  const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
-  const waveContract = await waveContractFactory.deploy();
-  await waveContract.deployed();
+  const insultContractFactory = await hre.ethers.getContractFactory(
+    "InsultPortal"
+  );
+  const insultContract = await insultContractFactory.deploy({
+    value: hre.ethers.utils.parseEther("0.1"),
+  });
+  await insultContract.deployed();
+  console.log("Contract addy:", insultContract.address);
 
-  console.log('Contract deployed to:', waveContract.address);
-  console.log('Contract deployed by:', owner.address);
+  let insultCount;
+  insultCount = await insultContract.getTotalInsults();
+  console.log(insultCount.toNumber());
 
-  let waveCount;
-  waveCount = await waveContract.getTotalWaves();
+  /**
+   * Let's send a few insults!
+   */
+  let insultTxn = await insultContract.insult(
+    "0xe39b53995e469103128e2a285e3a8DDD0097aD6f",
+    "fat",
+    "she brought a spoon to the Super Bowl"
+  );
+  await insultTxn.wait(); // Wait for the transaction to be mined
 
-  let waveTxn = await waveContract.wave();
-  await waveTxn.wait();
+  let contractBalance = await hre.ethers.provider.getBalance(
+    insultContract.address
+  );
+  console.log(
+    "Contract balance:",
+    hre.ethers.utils.formatEther(contractBalance)
+  );
 
-  waveCount = await waveContract.getTotalWaves();
+  const [_, randomPerson] = await hre.ethers.getSigners();
+  insultTxn = await insultContract
+    .connect(randomPerson)
+    .insult(
+      "0xe39b53995e469103128e2a285e3a8DDD0097aD6f",
+      "ugly",
+      "her portraits hang themselves"
+    );
+  await insultTxn.wait(); // Wait for the transaction to be mined
 
-  waveTxn = await waveContract.connect(randomPerson).wave();
-  await waveTxn.wait();
+  contractBalance = await hre.ethers.provider.getBalance(
+    insultContract.address
+  );
+  console.log(
+    "Contract balance:",
+    hre.ethers.utils.formatEther(contractBalance)
+  );
 
-  waveCount = await waveContract.getTotalWaves();
+  let allInsults = await insultContract.getAllInsults();
+  console.log(allInsults);
 };
 
 const runMain = async () => {
