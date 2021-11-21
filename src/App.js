@@ -155,9 +155,9 @@ const App = () => {
         * Execute the actual insult from your smart contract
         */
         const insultTxn = await insultPortalContract.insult(
-          defaultInsultee,
-          "fat",
-          "she brought a spoon to the Super Bowl"
+          insultee,
+          insultType,
+          message
         );
         console.log("Mining...", insultTxn.hash);
 
@@ -242,7 +242,7 @@ const App = () => {
           </form>
         ))
         }
-        
+
         {console.log(allInsults)}
         {allInsults.map((insult, index) => {
           return (
