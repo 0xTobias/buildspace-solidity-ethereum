@@ -193,7 +193,17 @@ const App = () => {
       <div className="dataContainer">
         <div className="bio">WHAT TF DID YOU SAY ABOUT MA MOMMA???!!?!</div>
 
-        {recentlyInsulted ? (
+        
+
+        {/*
+         * If there is no currentAccount render this button
+         */}
+        {!currentAccount ? 
+          <button className="connectButton" onClick={connectWallet}>
+            Connect Wallet
+          </button>
+         :
+        (recentlyInsulted ? (
             <img className="gif" src="https://i.imgur.com/rhCcmUv.gif" />
         ) : (
           <form
@@ -230,16 +240,9 @@ const App = () => {
               Yo' momma {insultee === defaultInsultee ? "Me" : insultee}
             </button>
           </form>
-        )}
-
-        {/*
-         * If there is no currentAccount render this button
-         */}
-        {!currentAccount && (
-          <button className="insultButton" onClick={connectWallet}>
-            Connect Wallet
-          </button>
-        )}
+        ))
+        }
+        
         {console.log(allInsults)}
         {allInsults.map((insult, index) => {
           return (
